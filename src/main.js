@@ -25,6 +25,9 @@ const createGalleryCardTemplate = galleryEl => {
                   <li class="img-info-item">
         <span class="img-info-title" >Downloads</span>
         <span class="img-info-number">${galleryEl.downloads}</span>
+                  </li>
+                  </ul>
+                  </div>
                   </li>`;
 };
 
@@ -46,7 +49,7 @@ const onFormSubmit = event => {
       console.log(data);
       const galleryCardsTemplate = data.hits
         .map(el => {
-          createGalleryCardTemplate(el);
+          return createGalleryCardTemplate(el);
         })
         .join('');
 
