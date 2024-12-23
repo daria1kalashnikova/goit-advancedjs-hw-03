@@ -1,6 +1,7 @@
 import iziToast from 'izitoast';
 import SimpleLightbox from 'simplelightbox';
-import { createGalleryCardTemplate } from './js/render-functions';
+import { createGalleryCardsTemplate } from './js/render-functions';
+import { fetchPhotosByQuery } from './js/pixabay-api';
 
 const formEl = document.querySelector('.js-search-form');
 const galleryElement = document.querySelector('.js-gallery');
@@ -16,17 +17,9 @@ const onFormSubmit = event => {
   galleryElement.innerHTML = '';
   loaderEl.classList.remove('is-hidden');
 
-  fetch(
-    `https://pixabay.com/api/?key=44900327-ed76a6d24ccf74b976808d529&q=${inputValue}&image_type=photo&orientation=horizontal&safesearch=true`
-  )
+  fetchPhotosByQuery(inputValue)
     .finally(() => {
       loaderEl.classList.add('is-hidden');
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      return response.json();
     })
     .then(data => {
       console.log(data);
@@ -41,14 +34,7 @@ const onFormSubmit = event => {
 
         return;
       }
-
-      const galleryCardsTemplate = data.hits
-        .map(el => {
-          return createGalleryCardTemplate(el);
-        })
-        .join('');
-
-      galleryElement.innerHTML = galleryCardsTemplate;
+      galleryElement.innerHTML = createGalleryCardsTemplate(data.hits);
       bigImage.refresh();
     })
     .catch(err => {
