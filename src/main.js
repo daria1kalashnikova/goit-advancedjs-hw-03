@@ -1,36 +1,14 @@
+import iziToast from 'izitoast';
+import SimpleLightbox from 'simplelightbox';
+import { createGalleryCardTemplate } from './js/render-functions';
+
 const formEl = document.querySelector('.js-search-form');
 const galleryElement = document.querySelector('.js-gallery');
 const loaderEl = document.querySelector('.js-loader');
-
-const createGalleryCardTemplate = galleryEl => {
-  return `<li class="gallery-card">
-              <img
-                class="gallery-img"
-                src="${galleryEl.webformatURL}"
-                alt="${galleryEl.tags}"
-              />
-              <div class="img-info">
-                <ul class="img-info-list">
-             <li class="img-info-item">
-        <span class="img-info-title" >Likes</span>
-        <span class="img-info-number">${galleryEl.likes}</span>
-                  </li>
-                  <li class="img-info-item">
-        <span class="img-info-title" >Views</span>
-        <span class="img-info-number">${galleryEl.views}</span>
-                  </li>
-                  <li class="img-info-item">
-        <span class="img-info-title" >Comments</span>
-        <span class="img-info-number">${galleryEl.comments}</span>
-                  </li>
-                  <li class="img-info-item">
-        <span class="img-info-title" >Downloads</span>
-        <span class="img-info-number">${galleryEl.downloads}</span>
-                  </li>
-                  </ul>
-                  </div>
-                  </li>`;
-};
+let bigImage = new SimpleLightbox('.js-gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
 const onFormSubmit = event => {
   event.preventDefault();
@@ -53,9 +31,11 @@ const onFormSubmit = event => {
     .then(data => {
       console.log(data);
       if (data.total === 0) {
-        alert(
-          'Sorry, there are no images matching your search query. Please try again!'
-        );
+        iziToast.warning({
+          message:
+            'Sorry, there are no images matching your search query. Please try again!',
+          position: 'topRight',
+        });
 
         galleryElement.innerHTML = '';
 
@@ -69,6 +49,7 @@ const onFormSubmit = event => {
         .join('');
 
       galleryElement.innerHTML = galleryCardsTemplate;
+      bigImage.refresh();
     })
     .catch(err => {
       console.log(err);
