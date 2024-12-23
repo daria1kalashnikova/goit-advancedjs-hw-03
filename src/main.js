@@ -1,4 +1,5 @@
 const formEl = document.querySelector('.js-search-form');
+const galleryElement = document.querySelector('.js-gallery');
 
 const createGalleryCardTemplate = galleryEl => {
   return `<li class="gallery-card">
@@ -6,8 +7,6 @@ const createGalleryCardTemplate = galleryEl => {
                 class="gallery-img"
                 src="${galleryEl.webformatURL}"
                 alt="${galleryEl.tags}"
-                width="360"
-                height="200"
               />
               <div class="img-info">
                 <ul class="img-info-list">
@@ -45,11 +44,13 @@ const onFormSubmit = event => {
     })
     .then(data => {
       console.log(data);
-      const galleryCardsTemplate = data.hits.map(el => {
-        createGalleryCardTemplate(el);
-      });
+      const galleryCardsTemplate = data.hits
+        .map(el => {
+          createGalleryCardTemplate(el);
+        })
+        .join('');
 
-      console.log(galleryCardsTemplate);
+      galleryElement.innerHTML = galleryCardsTemplate;
     })
     .catch(err => {
       console.log(err);
