@@ -1,9 +1,70 @@
-/**
-  |============================
-  | include css partials with
-  | default @import url()
-  |============================
-*/
-/* Common styles */
 @import url('./reset.css');
-@import url('./base.css');
+
+.gallery-section {
+  padding-top: 36px;
+}
+
+.container {
+  width: 1200px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: o auto;
+}
+
+.search-form {
+  width: 600px;
+  display: flex;
+  margin: 0 auto;
+  margin-bottom: 32px;
+}
+
+.search-input {
+  font-size: 18px;
+  height: 40px;
+  width: 272px;
+  padding-left: 16px;
+  border: 1px solid #303030;
+  border-radius: 4px;
+  background: #fff;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.search-btn {
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 91px;
+  height: 40px;
+  background-color: #4e75ff;
+  color: #ffffff;
+  border: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-left: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.gallery-card {
+  width: calc((100% - 60px) / 4);
+}
+
+.gallery-img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+}
