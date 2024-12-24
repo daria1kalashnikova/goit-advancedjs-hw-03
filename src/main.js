@@ -13,7 +13,14 @@ let bigImage = new SimpleLightbox('.js-gallery a', {
 
 const onFormSubmit = event => {
   event.preventDefault();
-  const inputValue = event.currentTarget.elements.user_query.value;
+  const inputValue = event.currentTarget.elements.user_query.value.trim();
+  if (inputValue === '') {
+    iziToast.warning({
+      message: 'The input must be filled in!',
+      position: 'topRight',
+    });
+    return;
+  }
   galleryElement.innerHTML = '';
   loaderEl.classList.remove('is-hidden');
 
